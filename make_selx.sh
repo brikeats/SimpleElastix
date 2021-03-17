@@ -1,9 +1,6 @@
 #!/bin/bash
 
-# run this with 
-# docker run --rm -e PLAT=manylinux2010_x86_64 -v /home/user/local_dir:/io quay.io/pypa/manylinux2010_x86_64 /io/make_selx.sh
-
-IO_DIR=${IO_DIR:-/io}
+IO_DIR=/wheels
 BASE_DIR=${BASE_DIR:-$IO_DIR}
 PLAT=${PLAT:-manylinux2010_x86_64}
 PYTHON_TARGET=${PYTHON_TARGET:-cp38-cp38}
@@ -15,12 +12,7 @@ PYTHON_EXE=$PYTHON_BIN/python
 INCLUDES=(/opt/python/$PYTHON_TARGET/include/*) # all subdirs
 PYTHON_INCLUDE=${INCLUDES[0]} # get the appropriate include directory
 
-mkdir -p "$BASE_DIR"
-cd $BASE_DIR
-git clone https://github.com/SuperElastix/SimpleElastix.git
-cd SimpleElastix
-git pull
-rm -rf build
+cd ../SimpleElastix
 mkdir build
 cd build
 cmake ../SuperBuild
@@ -36,14 +28,14 @@ cmake -DBUILD_EXAMPLES:BOOL=OFF \
     -DPYTHON_EXECUTABLE:STRING=$PYTHON_EXE \
     -DPYTHON_INCLUDE_DIR:STRING=$PYTHON_INCLUDE .
     
-make -j$MAKE_THREADS
+# make -j$MAKE_THREADS
 
-# copy the setup.py script
-cp SimpleITK-build/Wrapping/Python/Packaging/setup.py SimpleITK-build/Wrapping/Python/
-cd SimpleITK-build/Wrapping/Python/
-sed -i.bak -e "s/sitkHASH\s*=\s*[\"'][a-zA-Z0-9]*[\"']/sitkHASH = None/" -e "s/name\s*=\s*[\"']SimpleITK[\"']/name='$MODULE_NAME'/" setup.py
-$PYTHON_EXE setup.py bdist_wheel
-cd dist
-auditwheel repair --plat $PLAT *.whl
-mkdir -p "$IO_DIR"
-cp wheelhouse/*.whl "$IO_DIR"
+# # copy the setup.py script
+# cp SimpleITK-build/Wrapping/Python/Packaging/setup.py SimpleITK-build/Wrapping/Python/
+# cd SimpleITK-build/Wrapping/Python/
+# sed -i.bak -e "s/sitkHASH\s*=\s*[\"'][a-zA-Z0-9]*[\"']/sitkHASH = None/" -e "s/name\s*=\s*[\"']SimpleITK[\"']/name='$MODULE_NAME'/" setup.py
+# $PYTHON_EXE setup.py bdist_wheel
+# cd dist
+# auditwheel repair --plat $PLAT *.whl
+# mkdir -p "$IO_DIR"
+# cp wheelhouse/*.whl "$IO_DIR"
