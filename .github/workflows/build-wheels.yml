@@ -19,37 +19,31 @@ jobs:
 
     steps:
 
-      - name: Checkout build scripts
-        uses: actions/checkout@v2
-        with:
-          path: scripts
+      # - name: Checkout build scripts
+      #   uses: actions/checkout@v2
+      #   with:
+      #     path: scripts
 
-      - name: Checkout SimpleElastix
-        uses: actions/checkout@v2
-        with:
-          repository: 'SuperElastix/SimpleElastix'
-          path: src
+      # - name: Checkout SimpleElastix
+      #   uses: actions/checkout@v2
+      #   with:
+      #     repository: 'SuperElastix/SimpleElastix'
+      #     path: src
 
-      - name: DEBUG PATHS
+      # - name: Set up Python
+      #   uses: actions/setup-python@v2
+      #   with:
+      #     python-version: 3.8
+
+      # - name: Install dependencies
+      #   run: pip install twine
+
+      - name: Get number of CPU cores
         run: |
-          pwd
-          echo --------
-          ls -al
-          echo --------
-          ls src
-          echo --------
-          ls scripts
-
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.8
-
-      - name: Install dependencies
-        run: pip install twine
-      
-      - name: Build wheel
-        run: ./scripts/make_selx.sh
+          cat /proc/cpuinfo | grep -c processor
+        
+      # - name: Build wheel
+      #   run: ./scripts/make_selx.sh
       
       # - name: Deploy
       #   uses: peaceiris/actions-gh-pages@v3
