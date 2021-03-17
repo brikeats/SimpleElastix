@@ -1,0 +1,49 @@
+
+name: Build SimpleElastix
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+
+  job:
+
+    name: Build Linux wheels
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        container: ["quay.io/pypa/manylinux1_x86_64:latest", "quay.io/pypa/manylinux2010_x86_64:latest"]
+
+    steps:
+
+      - name: Checkout build scripts
+        uses: actions/checkout@v2
+
+      - name: Checkout SimpleElastix
+        uses: actions/checkout@v2
+        repository: 'https://github.com/SuperElastix/SimpleElastix/tree/develop'
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+      - name: Check container
+        run: echo ${{ matrix.container }}
+
+      # - name: Install dependencies
+      #   run: pip install twine
+
+      # - name: Build
+      #   run: |
+      #     conda run -n hlxpy /bin/bash -c "python -m pdoc --html --output-dir docs --template-dir docs-templates hlxpy"
+      #     ls docs/hlxpy
+      
+      # - name: Deploy
+      #   uses: peaceiris/actions-gh-pages@v3
+      #   with:
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
+      #     publish_dir: ./docs/hlxpy
+      #     publish_branch: docs
