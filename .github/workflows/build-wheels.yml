@@ -30,6 +30,9 @@ jobs:
           repository: 'SuperElastix/SimpleElastix'
           path: source
 
+      - name: DEBUG PATHS
+        run: ls -al
+
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
