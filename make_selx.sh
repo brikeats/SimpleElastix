@@ -16,14 +16,12 @@ PYTHON_INCLUDE=${INCLUDES[0]} # get the appropriate include directory
 echo ---------
 pwd
 ls ..
-ls ../source
+ls src
 echo ---------
 
-cd ../source
+cd src
 mkdir build
 cd build
-
-
 cmake ../SuperBuild
 cmake -DBUILD_EXAMPLES:BOOL=OFF \
     -DBUILD_TESTING:BOOL=OFF \
