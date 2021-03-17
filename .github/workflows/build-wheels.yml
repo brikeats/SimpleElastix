@@ -24,32 +24,22 @@ jobs:
         with:
           path: scripts
 
-      - name: DEBUG 1
-        run: pwd && ls -al
-
       - name: Checkout SimpleElastix
         uses: actions/checkout@v2
         with:
           repository: 'SuperElastix/SimpleElastix'
           path: source
 
-      - name: DEBUG 2
-        run: pwd && ls -al
-
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
           python-version: 3.8
 
-      - name: Check container
-        run: echo ${{ matrix.container }}
-
       - name: Install dependencies
         run: pip install twine
-
       
       - name: Build wheel
-        run: ./make_selx.sh
+        run: ./scripts/make_selx.sh
       
       # - name: Deploy
       #   uses: peaceiris/actions-gh-pages@v3
