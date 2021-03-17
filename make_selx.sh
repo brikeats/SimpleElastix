@@ -5,7 +5,7 @@ BASE_DIR=${BASE_DIR:-$IO_DIR}
 PLAT=${PLAT:-manylinux2010_x86_64}
 PYTHON_TARGET=${PYTHON_TARGET:-cp38-cp38}
 MODULE_NAME=${MODULE_NAME:-SimpleITK-Elastix}
-MAKE_THREADS=${MAKE_THREADS:-4}
+MAKE_THREADS=$(cat /proc/cpuinfo | grep -c processor)
 
 PYTHON_BIN=/opt/python/$PYTHON_TARGET/bin
 PYTHON_EXE=$PYTHON_BIN/python
@@ -28,14 +28,19 @@ cmake -DBUILD_EXAMPLES:BOOL=OFF \
     -DPYTHON_EXECUTABLE:STRING=$PYTHON_EXE \
     -DPYTHON_INCLUDE_DIR:STRING=$PYTHON_INCLUDE .
     
-# make -j$MAKE_THREADS
+make -j$MAKE_THREADS
 
-# # copy the setup.py script
-# cp SimpleITK-build/Wrapping/Python/Packaging/setup.py SimpleITK-build/Wrapping/Python/
-# cd SimpleITK-build/Wrapping/Python/
-# sed -i.bak -e "s/sitkHASH\s*=\s*[\"'][a-zA-Z0-9]*[\"']/sitkHASH = None/" -e "s/name\s*=\s*[\"']SimpleITK[\"']/name='$MODULE_NAME'/" setup.py
-# $PYTHON_EXE setup.py bdist_wheel
-# cd dist
-# auditwheel repair --plat $PLAT *.whl
-# mkdir -p "$IO_DIR"
-# cp wheelhouse/*.whl "$IO_DIR"
+echo ====== Successfully compiled SimpleElastix
+
+# copy the setup.py script
+cp SimpleITK-build/Wrapping/Python/Packaging/setup.py SimpleITK-build/Wrapping/Python/
+cd SimpleITK-build/Wrapping/Python/
+sed -i.bak -e "s/sitkHASH\s*=\s*[\"'][a-zA-Z0-9]*[\"']/sitkHASH = None/" -e "s/name\s*=\s*[\"']SimpleITK[\"']/name='$MODULE_NAME'/" setup.py
+$PYTHON_EXE setup.py bdist_wheel
+cd dist
+auditwheel repair --plat $PLAT *.whl
+mkdir -p "$IO_DIR"
+cp wheelhouse/*.whl "$IO_DIR"
+
+echo ====== Successfully built wheel
+ls $IO_DIR
