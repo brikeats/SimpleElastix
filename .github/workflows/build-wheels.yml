@@ -14,7 +14,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        container: ["quay.io/pypa/manylinux1_x86_64:latest", "quay.io/pypa/manylinux2010_x86_64:latest"]
+        container: ["quay.io/pypa/manylinux1_x86_64:latest"]
+        # container: ["quay.io/pypa/manylinux1_x86_64:latest", "quay.io/pypa/manylinux2010_x86_64:latest"]
 
     steps:
 
@@ -24,7 +25,7 @@ jobs:
       - name: Checkout SimpleElastix
         uses: actions/checkout@v2
         with:
-          repository: 'https://github.com/SuperElastix/SimpleElastix/tree/develop'
+          repository: 'SuperElastix/SimpleElastix'
 
       - name: Set up Python
         uses: actions/setup-python@v2
