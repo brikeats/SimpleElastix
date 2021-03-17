@@ -38,6 +38,9 @@ jobs:
       - name: Install dependencies
         run: pip install twine
 
+      - name: DEBUG
+        run: ls -al
+
       - name: Build wheel
         run: ./make_selx.sh
       
