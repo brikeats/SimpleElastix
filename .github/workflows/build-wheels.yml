@@ -22,11 +22,17 @@ jobs:
       - name: Checkout build scripts
         uses: actions/checkout@v2
 
+      - name: DEBUG 1
+        run: pwd && ls -al
+
       - name: Checkout SimpleElastix
         uses: actions/checkout@v2
         with:
           repository: 'SuperElastix/SimpleElastix'
-          
+
+      - name: DEBUG 2
+        run: pwd && ls -al
+
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
@@ -38,9 +44,7 @@ jobs:
       - name: Install dependencies
         run: pip install twine
 
-      - name: DEBUG
-        run: ls -al
-
+      
       - name: Build wheel
         run: ./make_selx.sh
       
