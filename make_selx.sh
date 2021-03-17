@@ -12,15 +12,17 @@ PYTHON_EXE=$PYTHON_BIN/python
 INCLUDES=(/opt/python/$PYTHON_TARGET/include/*) # all subdirs
 PYTHON_INCLUDE=${INCLUDES[0]} # get the appropriate include directory
 
-cd ../source
-mkdir build
-cd build
-
 # DEBUG
 echo ---------
 pwd
 ls ..
+ls ../source
 echo ---------
+
+cd ../source
+mkdir build
+cd build
+
 
 cmake ../SuperBuild
 cmake -DBUILD_EXAMPLES:BOOL=OFF \
