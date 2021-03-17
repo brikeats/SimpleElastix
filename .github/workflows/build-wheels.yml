@@ -3,8 +3,8 @@ name: Build SimpleElastix
 
 on:
   push:
-    branches:
-      - develop
+    # branches:
+    #   - develop
 
 jobs:
 
@@ -23,7 +23,8 @@ jobs:
 
       - name: Checkout SimpleElastix
         uses: actions/checkout@v2
-        repository: 'https://github.com/SuperElastix/SimpleElastix/tree/develop'
+        with:
+          repository: 'https://github.com/SuperElastix/SimpleElastix/tree/develop'
 
       - name: Set up Python
         uses: actions/setup-python@v2
