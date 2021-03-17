@@ -31,7 +31,11 @@ jobs:
           path: source
 
       - name: DEBUG PATHS
-        run: ls -al
+        run: |
+          pwd
+          ls -al
+          ls source
+          ls scripts
 
       - name: Set up Python
         uses: actions/setup-python@v2
