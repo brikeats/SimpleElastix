@@ -33,8 +33,11 @@ jobs:
       - name: DEBUG PATHS
         run: |
           pwd
+          echo --------
           ls -al
+          echo --------
           ls source
+          echo --------
           ls scripts
 
       - name: Set up Python
