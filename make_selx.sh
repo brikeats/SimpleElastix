@@ -24,23 +24,21 @@ cmake -DBUILD_EXAMPLES:BOOL=OFF \
     -DWRAP_R:BOOL=OFF \
     -DWRAP_RUBY:BOOL=OFF \
     -DWRAP_TCL:BOOL=OFF \
-    -DWRAP_PYTHON:BOOL=ON \
-    -DPYTHON_EXECUTABLE:STRING=$PYTHON_EXE \
-    -DPYTHON_INCLUDE_DIR:STRING=$PYTHON_INCLUDE .
-    
+    -DWRAP_PYTHON:BOOL=ON .
 make -j$MAKE_THREADS
 
-echo ====== Successfully compiled SimpleElastix
+echo ====== Successfully compiled SimpleElastix ======
+
 
 # copy the setup.py script
 cp SimpleITK-build/Wrapping/Python/Packaging/setup.py SimpleITK-build/Wrapping/Python/
 cd SimpleITK-build/Wrapping/Python/
 sed -i.bak -e "s/sitkHASH\s*=\s*[\"'][a-zA-Z0-9]*[\"']/sitkHASH = None/" -e "s/name\s*=\s*[\"']SimpleITK[\"']/name='$MODULE_NAME'/" setup.py
-$PYTHON_EXE setup.py bdist_wheel
+python setup.py bdist_wheel
 cd dist
-auditwheel repair --plat $PLAT *.whl
+auditwheel repair --plat manylinux2010_x86_64 *.whl
 mkdir -p "$IO_DIR"
 cp wheelhouse/*.whl "$IO_DIR"
 
-echo ====== Successfully built wheel
+echo ====== Successfully built wheel ======
 ls $IO_DIR

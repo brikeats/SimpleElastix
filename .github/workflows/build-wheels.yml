@@ -36,7 +36,7 @@ jobs:
           python-version: 3.8
 
       - name: Install dependencies
-        run: pip install twine
+        run: pip install twine cmake virtualenv auditwheel
 
       - name: Build wheel
         run: ./scripts/make_selx.sh
