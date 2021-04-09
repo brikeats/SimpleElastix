@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        container: ["quay.io/pypa/manylinux1_x86_64:latest"]
+        container: ["quay.io/pypa/manylinux2010_x86_64:latest"]
         # container: ["quay.io/pypa/manylinux1_x86_64:latest", "quay.io/pypa/manylinux2010_x86_64:latest"]
 
     steps:
@@ -36,7 +36,7 @@ jobs:
           python-version: 3.8
 
       - name: Install dependencies
-        run: pip install twine cmake virtualenv auditwheel
+        run: pip install wheel twine cmake virtualenv auditwheel
 
       - name: Build wheel
         run: ./scripts/make_selx.sh
