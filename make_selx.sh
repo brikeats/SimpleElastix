@@ -12,6 +12,10 @@ PYTHON_EXE=$PYTHON_BIN/python
 INCLUDES=(/opt/python/$PYTHON_TARGET/include/*) # all subdirs
 PYTHON_INCLUDE=${INCLUDES[0]} # get the appropriate include directory
 
+echo ======== Using Python: $PYTHON_EXE ============
+$PYTHON_EXE -V
+echo ======== Platform: $PLAT ======================
+
 cd src
 mkdir build
 cd build
@@ -34,7 +38,7 @@ echo ====== Successfully compiled SimpleElastix ======
 cp SimpleITK-build/Wrapping/Python/Packaging/setup.py SimpleITK-build/Wrapping/Python/
 cd SimpleITK-build/Wrapping/Python/
 sed -i.bak -e "s/sitkHASH\s*=\s*[\"'][a-zA-Z0-9]*[\"']/sitkHASH = None/" -e "s/name\s*=\s*[\"']SimpleITK[\"']/name='$MODULE_NAME'/" setup.py
-python setup.py bdist_wheel
+$PYTHON_EXE setup.py bdist_wheel
 cd dist
 auditwheel repair --plat manylinux2010_x86_64 *.whl
 mkdir -p "$IO_DIR"
