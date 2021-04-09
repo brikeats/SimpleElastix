@@ -16,6 +16,8 @@ echo ======== Using Python: $PYTHON_EXE ============
 $PYTHON_EXE -V
 echo ======== Platform: $PLAT ======================
 
+exit 0 # debug
+
 cd src
 mkdir build
 cd build
