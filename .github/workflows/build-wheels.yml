@@ -16,6 +16,8 @@ jobs:
       matrix:
         container: ["quay.io/pypa/manylinux2010_x86_64:latest"]
         # container: ["quay.io/pypa/manylinux1_x86_64:latest", "quay.io/pypa/manylinux2010_x86_64:latest"]
+        
+    container: ${{ matrix.container }}
 
     steps:
 
