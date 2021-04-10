@@ -27,7 +27,7 @@ jobs:
           path: scripts
 
       - name: Checkout SimpleElastix
-        uses: actions/checkout@v2
+        uses: actions/checkout@v1
         with:
           repository: 'SuperElastix/SimpleElastix'
           path: src
