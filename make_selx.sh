@@ -15,6 +15,7 @@ PYTHON_INCLUDE=${INCLUDES[0]} # get the appropriate include directory
 echo ======== Using Python: $PYTHON_EXE ============
 $PYTHON_EXE -V
 echo ======== Platform: $PLAT ======================
+ls /opt
 
 exit 0 # debug
 
