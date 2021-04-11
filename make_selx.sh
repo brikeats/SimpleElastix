@@ -1,9 +1,9 @@
-kate #!/bin/bash
+#!/bin/bash
 
 PYTHON_TARGET=$1
 
 IO_DIR=/wheels
-BASE_DIR=${BASE_DIR:-$IO_DIR}
+BASE_DIR=${BASE_DIR:-/src}
 PLAT=${PLAT:-manylinux2010_x86_64}
 PYTHON_TARGET=${PYTHON_TARGET:-cp38-cp38}
 MODULE_NAME=${MODULE_NAME:-SimpleITK-Elastix}
@@ -17,11 +17,11 @@ PYTHON_INCLUDE=${INCLUDES[0]} # get the appropriate include directory
 echo ======== Using Python: $PYTHON_EXE ============
 $PYTHON_EXE -V
 echo ======== Platform: $PLAT ======================
-ls /opt
 
-exit 0 # debug
-
-cd src
+mkdir -p "$BASE_DIR"
+cd $BASE_DIR
+git clone https://github.com/SuperElastix/SimpleElastix.git
+cd SimpleElastix
 mkdir build
 cd build
 cmake ../SuperBuild
@@ -33,7 +33,10 @@ cmake -DBUILD_EXAMPLES:BOOL=OFF \
     -DWRAP_R:BOOL=OFF \
     -DWRAP_RUBY:BOOL=OFF \
     -DWRAP_TCL:BOOL=OFF \
-    -DWRAP_PYTHON:BOOL=ON .
+    -DWRAP_PYTHON:BOOL=ON \
+    -DPYTHON_EXECUTABLE:STRING=$PYTHON_EXE \
+    -DPYTHON_INCLUDE_DIR:STRING=$PYTHON_INCLUDE .
+    
 make -j$MAKE_THREADS
 
 echo ====== Successfully compiled SimpleElastix ======
