@@ -1,4 +1,6 @@
-#!/bin/bash
+kate #!/bin/bash
+
+PYTHON_TARGET=$1
 
 IO_DIR=/wheels
 BASE_DIR=${BASE_DIR:-$IO_DIR}

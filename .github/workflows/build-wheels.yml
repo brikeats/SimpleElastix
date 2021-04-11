@@ -14,17 +14,17 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        container: ["quay.io/pypa/manylinux2010_x86_64:latest"]
+        python_version: ["cp38-cp38", "cp39-cp39"]
         # container: ["quay.io/pypa/manylinux1_x86_64:latest", "quay.io/pypa/manylinux2010_x86_64:latest"]
         
-    container: ${{ matrix.container }}
+    container: quay.io/pypa/manylinux2010_x86_64:latest
 
     steps:
 
       - name: Checkout build scripts
         uses: actions/checkout@v1
         with:
-          path: scripts
+          path: /scripts
 
       #- name: Checkout SimpleElastix
       #  uses: actions/checkout@v1
@@ -41,7 +41,7 @@ jobs:
       #  run: pip install wheel twine cmake virtualenv auditwheel
 
       - name: Build wheel
-        run: ./scripts/make_selx.sh
+        run: /scripts/make_selx.sh ${{ matrix.python_version }}
       
       # - name: Deploy
       #   uses: peaceiris/actions-gh-pages@v3
