@@ -41,7 +41,7 @@ jobs:
       #  run: pip install wheel twine cmake virtualenv auditwheel
 
       - name: Build wheel
-        run: /home/runner/work/SimpleElastix-build/scripts/make_selx.sh ${{ matrix.python_version }}
+        run: /__w/SimpleElastix-build/scripts/make_selx.sh ${{ matrix.python_version }}
       
       # - name: Deploy
       #   uses: peaceiris/actions-gh-pages@v3
